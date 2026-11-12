@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CS Learn · Data Representation</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;background:#fff;color:#3c3c3c;min-height:100vh}
+#app{max-width:640px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:0 16px}
+button{font:inherit;cursor:pointer}
+.btn{width:100%;padding:14px;border:0;border-bottom:4px solid #58a700;border-radius:14px;background:#58cc02;color:#fff;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn:disabled{background:#e5e5e5;border-color:#cfcfcf;color:#afafaf;cursor:default}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-weight:800}
+.hd h1{margin:0;font-size:22px;color:#58cc02}
+.card{display:flex;align-items:center;gap:14px;border:2px solid #e5e5e5;border-bottom-width:4px;border-radius:16px;padding:16px;margin-bottom:14px}
+.card .ic{font-size:34px}
+.card .tx{flex:1}
+.card h3{margin:0 0 4px}
+.card small{color:#777}
+.card .btn{width:auto;padding:10px 18px}
+.top{display:flex;align-items:center;gap:14px;padding:20px 0}
+.x{background:none;border:0;font-size:22px;color:#afafaf}
+.bar{flex:1;height:16px;border-radius:8px;background:#e5e5e5;overflow:hidden}
+.bar i{display:block;height:100%;background:#58cc02;border-radius:8px;transition:width .3s}
+.h{color:#ff4b4b}
+main{flex:1;padding-bottom:20px}
+main h2{font-size:24px;margin:10px 0 24px}
+.opt{display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:12px;border:2px solid #e5e5e5;border-bottom-width:4px;border-radius:14px;background:#fff;font-size:17px;color:#3c3c3c}
+.opt.sel{border-color:#84d8ff;background:#ddf4ff;color:#1899d6}
+.opt.good{border-color:#58cc02;background:#d7ffb8;color:#58a700}
+.opt.bad{border-color:#ff4b4b;background:#ffdfe0;color:#ea2b2b}
+input{width:100%;padding:14px;font-size:18px;border:2px solid #e5e5e5;border-radius:14px;background:#f7f7f7;outline:none}
+input:focus{border-color:#84d8ff}
+footer{margin:0 -16px;padding:20px 16px 28px;border-top:2px solid #e5e5e5}
+footer.ok{background:#d7ffb8;border-color:#d7ffb8;color:#58a700}
+footer.bad{background:#ffdfe0;border-color:#ffdfe0;color:#ea2b2b}
+footer p{margin:0 0 14px;font-weight:700}
+footer.bad .btn{background:#ff4b4b;border-color:#ea2b2b}
+.c{text-align:center;margin:auto;padding:30px 0}
+.c .big{font-size:72px}
+.c h2{font-size:28px}
+.st{display:inline-block;margin:6px;padding:10px 18px;border:2px solid #e5e5e5;border-radius:14px;font-weight:800;color:#ffa800}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ---------- Contenido ----------
+const mc=(q,a,w,x)=>({t:'mc',q,a,o:[a,...w],x});
+const tx=(q,a,x)=>({t:'tx',q,a,x});
+const U=[
+{t:'Number systems',e:'🔢',qs:[
+ mc('A ______ is a high-speed area of memory located within the CPU.','Register',['Hard drive','Cache disk','Motherboard'],'A register temporarily stores data during the fetch–decode–execute cycle.'),
+ mc('The ______ number system is the human-readable one, with 10 digits.','Denary',['Binary','Hexadecimal','Octal'],'Denary (base 10) uses the digits 0–9.'),
+ tx('Convert −11 into 8-bit two\'s complement.','11110101','11 = 00001011 → complement = 11110100 → add 1 = 11110101.'),
+ tx('Convert 76 into 8-bit two\'s complement.','01001100','A positive number is just its binary using all 8 bits.'),
+ tx('Result of a 2-bit logical RIGHT shift on 00110001?','00001100','Bits shifted off the right are lost and zeros are added on the left.'),
+ tx('Result of a 1-bit logical LEFT shift on 00110001?','01100010','Bits move left, a zero is added on the right.'),
+ tx('Add 10101010 + 00110011 in binary.','11011101','170 + 51 = 221 = 11011101.'),
+ mc('What happens if the system tries to store a denary value greater than 255 in an 8-bit register?','Overflow error',['Underflow error','The value is rounded','Nothing happens'],'Overflow errors happen when a value is bigger than the register capacity; it may crash the system.'),
+ mc('One example of hexadecimal usage is…','Displaying error messages',['Machine code programming','High-level language programming','Designing presentation files'],'Hex is used e.g. in error messages and memory addresses.'),
+ mc('A benefit of hexadecimal instead of binary is…','Shorter representation on the screen',['Uses less memory space','Faster program execution','Faster data transmission'],'Hex is easier for humans to read; the computer still stores binary.')
+]},
+{t:'Text, sound and images',e:'🎧',qs:[
+ mc('The number of characters that can be represented using ASCII is…','128',['256','64','65,536'],'Standard ASCII uses 7 bits → 128 characters.'),
+ tx('The computer stores \'A\' as 01000001 (65). What is the denary number of \'B\'?',66,'B comes right after A, so 65 + 1 = 66.'),
+ tx('How many bits are needed to store the phrase \'I love computer\'? (8 bits per character, spaces count)',120,'15 characters × 8 bits = 120 bits.'),
+ mc('What does ASCII stand for?','American Standard Code for Information Interchange',['Advanced System Code for Information Input','American Symbolic Code for Internet Interchange','Automatic Standard Character Interface Index'],''),
+ mc('Emojis can be represented using the ______ character set.','Unicode',['ASCII','Binary','Hexadecimal'],'Unicode can represent every character in every language, including emojis.'),
+ mc('In the physical world, sounds are ______ waves that are constantly changing.','Analogue',['Digital','Discrete','Binary'],'Real-world data is continuously variable.'),
+ mc('Digital sounds used by computers are made up of…','Discrete signals',['Continuous waves','Analogue curves','Pixels'],'A sequence of discrete on/off signals.'),
+ mc('The number of bits used to record each measurement during sampling is called…','Sample resolution',['Sample rate','Bit rate','Frequency'],''),
+ mc('The higher the sample rate and resolution, the ______ the sound and the ______ the file.','more accurate / larger',['less accurate / larger','more accurate / smaller','less accurate / smaller'],''),
+ mc('Which of these is a sound file type?','.mp3',['.jpg','.png','.gif'],''),
+ mc('In images, the number of bits per pixel is called…','Colour depth',['Resolution','Sample rate','Pixel pitch'],'Higher colour depth and resolution → more data to store.'),
+ mc('A picture described as 1080 × 720 is describing its…','Resolution',['Colour depth','File type','Compression'],'Resolution is the number of pixels (width × height).'),
+ tx('How many bits are needed to represent 512 colours?',9,'log2(512) = 9.'),
+ tx('Hexadecimal colour value of BLACK (6 digits)?','000000','White would be FFFFFF.')
+]},
+{t:'Data storage & compression',e:'🗜️',qs:[
+ mc('Compression that loses some data from the file is called…','Lossy',['Lossless','Raw','Binary'],'Lossy permanently removes data → smaller file, lower quality.'),
+ mc('In ______ compression, the uncompressed file is exactly the same as the original.','Lossless',['Lossy','Analogue','Raw'],''),
+ mc('Files with no compression applied are called…','Raw files',['Lossy files','Lossless files','Encoded files'],''),
+ tx('Name the lossless technique that encodes "runs" of the same data as a value and a number of repetitions.',['runlengthencoding','rle'],'Run Length Encoding (RLE).'),
+ mc('Effect of compressing a movie with lossy compression?','Decreased file size and quality',['Increased file size','Same size, better quality','No change'],''),
+ mc('Two drawbacks of lossless vs lossy are…','Larger file size and slower transmission',['Smaller file size and faster transmission','Lower quality and larger size','Data loss and slower speed'],''),
+ mc('Which is an aim of file compression?','Save storage space',['Reduce file quality','Increase file size','Remove all data'],'Also faster transmission and less bandwidth.'),
+ mc('A compression ______ is a set of instructions applied to a file to reduce its size.','Algorithm',['Register','Sample','Pixel'],''),
+ mc('Which file will most likely be the largest?','1 hour of a movie file',['10 pages of a text file','1 hour of a music file','10 pages of programming code'],''),
+ tx('1 GiB = 2^x bytes. What is x?',30,'1 GiB = 1024³ = 2³⁰ bytes.'),
+ tx('A USB drive has 16 GiB free. How many 128 KiB photos fit? (16×1024×1024 / 128)',131072,'16 × 1024 × 1024 / 128 = 131,072.'),
+ tx('File size of a 3-minute sound, 44.1 kHz, 8-bit, in KiB? (3×60×44100×8 / 8 / 1024)',7751.95,'Seconds × rate × bits ÷ 8 (bytes) ÷ 1024 (KiB).'),
+ tx('File size of a 50-second sound, 44.1 kHz, 8-bit, in KiB?',2153,'50 × 44100 ÷ 1024 ≈ 2153 KiB.'),
+ tx('File size of a 2048 × 720 image with 256 colours, in MiB? (2 decimals)',1.41,'256 colours = 8 bits. 2048×720×8 bits ÷ 8 ÷ 1024 ÷ 1024 ≈ 1.406 MiB.')
+]}
+];
+
+// ---------- Estado ----------
+let S={xp:0,done:{}};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem('csl')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('csl',JSON.stringify(S))}catch(e){}};
+const $=document.getElementById('app');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let u,Q,idx,ok,N,hearts,pts,sel,fb,OPTS;
+
+// ---------- Pantallas ----------
+function home(){
+ $.innerHTML=`<div class=hd><h1>CS Learn</h1><span>⭐ ${S.xp} XP</span></div>
+ <p style="margin-top:0;color:#777">Topic 1: Data Representation</p>`+
+ U.map((x,i)=>`<div class=card><div class=ic>${S.done[i]?'✅':x.e}</div><div class=tx><h3>${x.t}</h3><small>${x.qs.length} preguntas</small></div><button class=btn onclick=start(${i})>${S.done[i]?'Repetir':'Empezar'}</button></div>`).join('');
+}
+function start(i){
+ u=i;Q=shuffle(U[i].qs).map(q=>({...q}));idx=0;ok=0;N=Q.length;hearts=5;pts=0;show();
+}
+function show(){
+ if(hearts<=0)return over();
+ if(idx>=Q.length)return fin();
+ const q=Q[idx];sel=null;fb=false;OPTS=q.t=='mc'?shuffle(q.o):[];
+ $.innerHTML=`<div class=top><button class=x onclick=home()>✕</button><div class=bar><i style="width:${ok/N*100}%"></i></div><b class=h>❤️ ${hearts}</b></div>
+ <main><h2>${q.q}</h2>${q.t=='mc'?OPTS.map((o,i)=>`<button class=opt id=o${i} onclick=pick(${i})>${o}</button>`).join(''):`<input id=in autocomplete=off autofocus placeholder="Escribe tu respuesta" oninput="document.getElementById('go').disabled=!this.value.trim()" onkeydown="if(event.key=='Enter')go()">`}</main>
+ <footer id=ft><button class=btn id=go onclick=go() disabled>Comprobar</button></footer>`;
+}
+function pick(i){
+ if(fb)return;sel=i;
+ OPTS.forEach((_,k)=>document.getElementById('o'+k).classList.toggle('sel',k==i));
+ document.getElementById('go').disabled=false;
+}
+function chk(v,a){
+ const n=s=>String(s).toLowerCase().replace(/[\s,'’\-]/g,'');
+ if(typeof a=='number'){const x=parseFloat(n(v));return !isNaN(x)&&Math.abs(x-a)<=a*0.005}
+ return [].concat(a).some(z=>n(z)==n(v));
+}
+function go(){
+ if(fb)return next();
+ const q=Q[idx];let right;
+ if(q.t=='mc'){if(sel==null)return;right=OPTS[sel]===q.a}
+ else{const v=document.getElementById('in').value;if(!v.trim())return;right=chk(v,q.a)}
+ fb=true;
+ if(right){ok++;if(!q.w)pts++}else{hearts--;q.w=1;Q.push(q)}
+ if(q.t=='mc')OPTS.forEach((o,k)=>{const b=document.getElementById('o'+k);if(o===q.a)b.classList.add('good');else if(k==sel)b.classList.add('bad');b.disabled=true});
+ else document.getElementById('in').disabled=true;
+ const ans=q.t=='mc'?q.a:[].concat(q.a)[0];
+ const f=document.getElementById('ft');
+ f.className=right?'ok':'bad';
+ f.innerHTML=`<p>${right?'✔ ¡Correcto!':'✘ Respuesta correcta: '+ans}</p>${q.x?`<p style="font-weight:400">${q.x}</p>`:''}<button class=btn id=go onclick=go()>Continuar</button>`;
+}
+function next(){idx++;show()}
+function fin(){
+ S.xp+=pts*10;S.done[u]=true;save();
+ $.innerHTML=`<div class=c><div class=big>🎉</div><h2>¡Lección completada!</h2><span class=st>⭐ +${pts*10} XP</span><span class=st>❤️ ${hearts} vidas</span><p style="color:#777">Acertaste ${pts} de ${N} a la primera.</p></div><footer><button class=btn onclick=home()>Continuar</button></footer>`;
+}
+function over(){
+ $.innerHTML=`<div class=c><div class=big>💔</div><h2>Te quedaste sin vidas</h2><p style="color:#777">¡Repasa e inténtalo otra vez!</p></div><footer><button class=btn onclick=start(${u})>Intentar de nuevo</button><br><br><button class=btn style="background:#fff;color:#1899d6;border-color:#e5e5e5" onclick=home()>Volver</button></footer>`;
+}
+home();
+</script>
+</body>
+</html>

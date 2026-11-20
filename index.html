@@ -51,7 +51,7 @@ footer.bad .btn{background:#ff4b4b;border-color:#ea2b2b}
 const mc=(q,a,w,x)=>({t:'mc',q,a,o:[a,...w],x});
 const tx=(q,a,x)=>({t:'tx',q,a,x});
 const U=[
-{t:'Number systems',e:'🔢',qs:[
+{tp:'Topic 1: Data Representation',t:'Number systems',e:'🔢',qs:[
  mc('A ______ is a high-speed area of memory located within the CPU.','Register',['Hard drive','Cache disk','Motherboard'],'A register temporarily stores data during the fetch–decode–execute cycle.'),
  mc('The ______ number system is the human-readable one, with 10 digits.','Denary',['Binary','Hexadecimal','Octal'],'Denary (base 10) uses the digits 0–9.'),
  tx('Convert −11 into 8-bit two\'s complement.','11110101','11 = 00001011 → complement = 11110100 → add 1 = 11110101.'),
@@ -94,6 +94,42 @@ const U=[
  tx('File size of a 3-minute sound, 44.1 kHz, 8-bit, in KiB? (3×60×44100×8 / 8 / 1024)',7751.95,'Seconds × rate × bits ÷ 8 (bytes) ÷ 1024 (KiB).'),
  tx('File size of a 50-second sound, 44.1 kHz, 8-bit, in KiB?',2153,'50 × 44100 ÷ 1024 ≈ 2153 KiB.'),
  tx('File size of a 2048 × 720 image with 256 colours, in MiB? (2 decimals)',1.41,'256 colours = 8 bits. 2048×720×8 bits ÷ 8 ÷ 1024 ÷ 1024 ≈ 1.406 MiB.')
+]},
+{tp:'Topic 2: Data Transmission',t:'Encryption',e:'🔐',qs:[
+ mc("Which of the following is true about encryption?","It prevents unauthorised people from understanding the message.",["It stops the message from being sent","It compresses the message","It corrects errors in the message"],"Encryption converts plaintext into ciphertext so unauthorised people can't understand it."),
+ mc("In asymmetric encryption, if a hacker discovered the ______ they would be able to read the encrypted message.","Private key",["Public key","Ciphertext","Algorithm"],"The private key is the one used to decrypt the data."),
+ mc("Both ______ and ______ encryption are used for SSL and TLS.","Symmetric and asymmetric",["Only symmetric","Only asymmetric","Neither of them"],""),
+ mc("A company sends a contract to a new employee over the internet. Which encryption method should it use to keep it highly secure?","Asymmetric",["Symmetric"],"Asymmetric is more secure because it uses two different keys to encrypt and decrypt."),
+ mc("Moustafa wants to send his project to Lilian using a simple and fast encryption method. Which should he use?","Symmetric",["Asymmetric"],"Symmetric is easier and faster: one secret key to encrypt and decrypt."),
+ mc("Which is NOT one of the asymmetric encryption steps?","Both the sender and the receiver exchange the same key.",["The receiver generates two keys (public and private)","The sender uses the receiver's public key to encrypt the data","The receiver uses its private key to decrypt the data"],"Asymmetric: receiver makes 2 keys → sends public key → sender encrypts → receiver decrypts with private key."),
+ mc("Which is NOT one of the symmetric encryption steps?","The sender replaces each letter with another one from the alphabet.",["Both sender and receiver exchange the same secret key","The sender encrypts the message with the secret key","The receiver uses the secret key to decrypt the message"],"Symmetric: share the secret key → encrypt → send → decrypt with the same key."),
+ tx("Name the simple encryption algorithm that replaces each character in the text with another one from the alphabet.",["caesarcipher"],"Caesar cipher."),
+ mc("Which item is NOT needed to perform the encryption process?","Ciphertext",["Plaintext","An algorithm","Encryption key"],"You need plaintext, an algorithm and a key. The ciphertext is the result."),
+ mc("An encryption ______ will use the encryption key to convert the plaintext into ciphertext.","Algorithm",["Protocol","Register","Packet"],""),
+ mc("Using the same key to encrypt and decrypt creates a problem called…","Key distribution",["Key generation","Key compression","Key parity"],"A copy of the secret key must be sent to the receiver."),
+ mc("______ is the protocol that transmits encrypted data between the web browser and the website.","HTTPS",["HTTP","FTP","USB"],"")
+]},
+{t:'Error detection',e:'🛡️',qs:[
+ mc("Errors can occur during data transmission due to…","Interference",["Encryption","Compression","Parity"],"E.g. data loss, data gain and data change."),
+ mc("What is the main purpose of an error detection method?","Maintain the accuracy of the data.",["Make the data smaller","Hide the data from hackers","Speed up the transmission"],"They detect errors that might occur during transmission."),
+ tx("Which error detection method is described? \"If the sent and received data are different, there's no way of knowing whether the error happened when originally sent or when sent back to the sender.\"",["echocheck"],"In echo check, the data may have been received correctly but corrupted on its way back."),
+ mc("The error check is performed at the ______ side with echo check, and at the ______ side with checksum.","Sender / receiver",["Receiver / sender","Sender / sender","Receiver / receiver"],""),
+ mc("Which method is NOT used for detecting errors in data transmission?","Check digit",["Checksum","Parity check","Automatic Repeat Query (ARQ)"],"A check digit validates data on entry."),
+ mc("Which ARQ step is incorrect?","The receiving computer recalculates the checksum value.",["It uses acknowledgement and timeout","If there's no acknowledgement in a time frame, the data is resent","If the data has an error, a resend request is sent automatically"],"ARQ: acknowledgements + timeouts, resend until error-free, limit reached or acknowledgement received."),
+ tx("Name the error detection method that uses acknowledgements and timeouts.",["automaticrepeatquery","arq"],"Automatic Repeat Query (ARQ)."),
+ mc("In ARQ, a ______ acknowledgement means the data arrived, and a ______ acknowledgement means it hasn't been received.","Positive / negative",["Negative / positive","Timeout / checksum","Parity / echo"],""),
+ mc("Two examples of check digit usage are an ______ for a library book and a ______ in a supermarket.","ISBN / barcode",["HTTPS / barcode","ISBN / checksum","USB / ISBN"],""),
+ mc("Check digit method: multiply each digit by its position (right to left), add, divide by 11; remainder 0 = valid. Is 235148 valid?","Valid",["Not valid"],"2×6+3×5+5×4+1×3+4×2+8×1 = 66; 66 ÷ 11 = 6, remainder 0 → valid."),
+ tx("Using ODD parity, what is the parity bit for 1000101?","0","1000101 already has an odd number of 1s, so the parity bit is 0."),
+ mc("Which byte was transmitted incorrectly if ODD parity was used?","01001011",["11000001","01000000","01001100"],"01001011 contains an even number of 1s."),
+ mc("Which byte was transmitted incorrectly if EVEN parity was used?","01001001",["11001001","01001000","01001110"],"01001001 contains an odd number of 1s.")
+]},
+{t:'Transmission methods & USB',e:'🔌',qs:[
+ mc("Using ______ transmission, data is sent from one device to another in one direction only.","Simplex",["Half-duplex","Full-duplex","Parity"],""),
+ mc("Which best describes half-duplex transmission?","Data is transmitted in both directions, but one direction at a time.",["Data is transmitted in one direction only","Data is transmitted in both directions at the same time","Data is transmitted only after encryption"],""),
+ mc("Using ______ transmission, data can be sent in both directions at the same time.","Full-duplex",["Simplex","Half-duplex","Asymmetric"],""),
+ tx("What is USB short for?",["universalserialbus"],"Universal Serial Bus."),
+ mc("To transmit data from a USB flash drive to a computer, the drive is plugged into the computer's USB ______.","Port",["Packet","Key","Algorithm"],"")
 ]}
 ];
 
@@ -107,9 +143,8 @@ let u,Q,idx,ok,N,hearts,pts,sel,fb,OPTS;
 
 // ---------- Pantallas ----------
 function home(){
- $.innerHTML=`<div class=hd><h1>CS Learn</h1><span>⭐ ${S.xp} XP</span></div>
- <p style="margin-top:0;color:#777">Topic 1: Data Representation</p>`+
- U.map((x,i)=>`<div class=card><div class=ic>${S.done[i]?'✅':x.e}</div><div class=tx><h3>${x.t}</h3><small>${x.qs.length} preguntas</small></div><button class=btn onclick=start(${i})>${S.done[i]?'Repetir':'Empezar'}</button></div>`).join('');
+ $.innerHTML=`<div class=hd><h1>CS Learn</h1><span>⭐ ${S.xp} XP</span></div>`+
+ U.map((x,i)=>(x.tp?`<h3 style="margin:18px 0 12px;color:#777">${x.tp}</h3>`:'')+`<div class=card><div class=ic>${S.done[i]?'✅':x.e}</div><div class=tx><h3>${x.t}</h3><small>${x.qs.length} preguntas</small></div><button class=btn onclick=start(${i})>${S.done[i]?'Repetir':'Empezar'}</button></div>`).join('');
 }
 function start(i){
  u=i;Q=shuffle(U[i].qs).map(q=>({...q}));idx=0;ok=0;N=Q.length;hearts=5;pts=0;show();
